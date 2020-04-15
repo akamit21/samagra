@@ -5,40 +5,17 @@ import {
   fetchAllPhotos,
   fetchAllTodos,
   fetchAllPosts,
+  fetchAllData,
 } from "./redux/actions/fetchAction";
 import { Container, Jumbotron, Row, Col, Table, Button } from "react-bootstrap";
 import Clock from "./Clock";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: [],
-    };
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.getAllData();
+    }, 5000);
   }
-
-  // componentDidMount() {
-  //   console.time();
-  //   fetch("https://jsonplaceholder.typicode.com/comments")
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       console.log(result);
-  //       this.setState({
-  //         isLoaded: true,
-  //         items: result,
-  //       });
-  //       console.timeEnd();
-  //       console.timeLog("a");
-  //     })
-  //     .catch((error) => {
-  //       this.setState({
-  //         isLoaded: true,
-  //         error,
-  //       });
-  //     });
-  // }
 
   render() {
     return (
@@ -212,6 +189,7 @@ const mapStateToProps = (state) => ({
   postsEndTime: state.postsEndTime,
 });
 const mapDispatchToProps = (dispatch) => ({
+  getAllData: () => dispatch(fetchAllData()),
   getComments: () => dispatch(fetchAllComments()),
   getPhotos: () => dispatch(fetchAllPhotos()),
   getTodos: () => dispatch(fetchAllTodos()),
