@@ -18,14 +18,16 @@ const config = {
   baseURL: "https://jsonplaceholder.typicode.com/",
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
   },
 };
 
 // comments action creator
-export const fetchCommentRequest = () => {
+export const fetchCommentRequest = (startTime) => {
   return {
     type: COMMENTS_REQUEST,
+    payload: {
+      startTime: startTime,
+    },
   };
 };
 export const fetchCommentSuccess = (res, startTime, endTime, saveTime) => {
@@ -33,7 +35,6 @@ export const fetchCommentSuccess = (res, startTime, endTime, saveTime) => {
     type: COMMENTS_SUCCESS,
     payload: {
       result: res,
-      startTime: startTime,
       endTime: endTime,
       saveStartTime: saveTime[0],
       saveEndTime: saveTime[1],
@@ -48,9 +49,12 @@ export const fetchCommentFailure = (err) => {
 };
 
 // photos action creator
-export const fetchPhotoRequest = () => {
+export const fetchPhotoRequest = (startTime) => {
   return {
     type: PHOTOS_REQUEST,
+    payload: {
+      startTime: startTime,
+    },
   };
 };
 export const fetchPhotoSuccess = (res, startTime, endTime, saveTime) => {
@@ -73,9 +77,12 @@ export const fetchPhotoFailure = (err) => {
 };
 
 // todos action creator
-export const fetchTodoRequest = () => {
+export const fetchTodoRequest = (startTime) => {
   return {
     type: TODOS_REQUEST,
+    payload: {
+      startTime: startTime,
+    },
   };
 };
 export const fetchTodoSuccess = (res, startTime, endTime, saveTime) => {
@@ -98,9 +105,12 @@ export const fetchTodoFailure = (err) => {
 };
 
 // posts action creator
-export const fetchPostRequest = () => {
+export const fetchPostRequest = (startTime) => {
   return {
     type: POSTS_REQUEST,
+    payload: {
+      startTime: startTime,
+    },
   };
 };
 export const fetchPostSuccess = (res, startTime, endTime, saveTime) => {
@@ -200,10 +210,10 @@ export const fetchAllData = () => {
   return async (dispatch) => {
     console.time();
     let startTime = Date.now();
-    dispatch(fetchCommentRequest());
-    dispatch(fetchPhotoRequest());
-    dispatch(fetchTodoRequest());
-    dispatch(fetchPostRequest());
+    dispatch(fetchCommentRequest(startTime));
+    dispatch(fetchPhotoRequest(startTime));
+    dispatch(fetchTodoRequest(startTime));
+    dispatch(fetchPostRequest(startTime));
 
     try {
       const comments = Axios.get("/comments", config);
@@ -215,10 +225,10 @@ export const fetchAllData = () => {
       console.timeEnd();
       let endTime = Date.now();
       let saveTime = saveData(res, "all");
-      dispatch(fetchCommentSuccess(res[0].data, startTime, endTime, saveTime));
-      dispatch(fetchPhotoSuccess(res[1].data, startTime, endTime, saveTime));
-      dispatch(fetchTodoSuccess(res[2].data, startTime, endTime, saveTime));
-      dispatch(fetchPostSuccess(res[3].data, startTime, endTime, saveTime));
+      dispatch(fetchCommentSuccess(res[0].data, endTime, saveTime));
+      dispatch(fetchPhotoSuccess(res[1].data, endTime, saveTime));
+      dispatch(fetchTodoSuccess(res[2].data, endTime, saveTime));
+      dispatch(fetchPostSuccess(res[3].data, endTime, saveTime));
     } catch (err) {
       dispatch(fetchCommentFailure(err));
       dispatch(fetchPhotoFailure(err));
