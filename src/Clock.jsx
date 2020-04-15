@@ -7,6 +7,9 @@ const Clock = () => {
     setInterval(() => {
       setTime(Date.now());
     }, 1000);
+    return () => {
+      clearInterval(time);
+    };
   });
   return <h1>{time}</h1>;
 };
