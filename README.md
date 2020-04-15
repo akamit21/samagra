@@ -14,7 +14,7 @@ The four Urls should be pinged at the same time (5-sec delay after opening the A
 ## Demo Link
 
 Open Here -
-[ **Demo** ](https://samagraapp.netlify.com/)
+[ **Demo** ]()
 
 ### Tech / Stack -
 
