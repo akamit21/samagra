@@ -27,13 +27,15 @@ export const fetchCommentRequest = () => {
     type: COMMENTS_REQUEST,
   };
 };
-export const fetchCommentSuccess = (res, startTime, endTime) => {
+export const fetchCommentSuccess = (res, startTime, endTime, saveTime) => {
   return {
     type: COMMENTS_SUCCESS,
     payload: {
       result: res,
       startTime: startTime,
       endTime: endTime,
+      saveStartTime: saveTime[0],
+      saveEndTime: saveTime[1],
     },
   };
 };
@@ -50,13 +52,15 @@ export const fetchPhotoRequest = () => {
     type: PHOTOS_REQUEST,
   };
 };
-export const fetchPhotoSuccess = (res, startTime, endTime) => {
+export const fetchPhotoSuccess = (res, startTime, endTime, saveTime) => {
   return {
     type: PHOTOS_SUCCESS,
     payload: {
       result: res,
       startTime: startTime,
       endTime: endTime,
+      saveStartTime: saveTime[0],
+      saveEndTime: saveTime[1],
     },
   };
 };
@@ -73,13 +77,15 @@ export const fetchTodoRequest = () => {
     type: TODOS_REQUEST,
   };
 };
-export const fetchTodoSuccess = (res, startTime, endTime) => {
+export const fetchTodoSuccess = (res, startTime, endTime, saveTime) => {
   return {
     type: TODOS_SUCCESS,
     payload: {
       result: res,
       startTime: startTime,
       endTime: endTime,
+      saveStartTime: saveTime[0],
+      saveEndTime: saveTime[1],
     },
   };
 };
@@ -96,13 +102,15 @@ export const fetchPostRequest = () => {
     type: POSTS_REQUEST,
   };
 };
-export const fetchPostSuccess = (res, startTime, endTime) => {
+export const fetchPostSuccess = (res, startTime, endTime, saveTime) => {
   return {
     type: POSTS_SUCCESS,
     payload: {
       result: res,
       startTime: startTime,
       endTime: endTime,
+      saveStartTime: saveTime[0],
+      saveEndTime: saveTime[1],
     },
   };
 };
@@ -111,6 +119,45 @@ export const fetchPostFailure = (err) => {
     type: POSTS_FAILURE,
     payload: err,
   };
+};
+
+const saveData = (res, type) => {
+  switch (type) {
+    // comments
+    case "comment": {
+      return "a";
+    }
+    case "photo": {
+      return "a";
+    }
+    case "todo": {
+      return "a";
+    }
+    case "post": {
+      let saveStartTime = Date.now();
+      let localData = JSON.parse(localStorage.getItem("APIData"));
+      let data = {
+        comments: localData.comments,
+        photos: localData.photos,
+        todos: localData.todos,
+        posts: res.data,
+      };
+      localStorage.setItem("APIData", JSON.stringify(data));
+      let saveEndTime = Date.now();
+      return [saveStartTime, saveEndTime];
+    }
+    default:
+      let saveStartTime = Date.now();
+      let data = {
+        comments: res[0].data,
+        photos: res[1].data,
+        todos: res[2].data,
+        posts: res[3].data,
+      };
+      localStorage.setItem("APIData", JSON.stringify(data));
+      let saveEndTime = Date.now();
+      return [saveStartTime, saveEndTime];
+  }
 };
 
 // fetch all data simultaneously using axios.all method
@@ -132,10 +179,11 @@ export const fetchAllData = () => {
       const res = await Axios.all([comments, photos, todos, posts]);
       console.timeEnd();
       let endTime = Date.now();
-      dispatch(fetchCommentSuccess(res[0].data, startTime, endTime));
-      dispatch(fetchPhotoSuccess(res[1].data, startTime, endTime));
-      dispatch(fetchTodoSuccess(res[2].data, startTime, endTime));
-      dispatch(fetchPostSuccess(res[3].data, startTime, endTime));
+      let saveTime = saveData(res, "all");
+      dispatch(fetchCommentSuccess(res[0].data, startTime, endTime, saveTime));
+      dispatch(fetchPhotoSuccess(res[1].data, startTime, endTime, saveTime));
+      dispatch(fetchTodoSuccess(res[2].data, startTime, endTime, saveTime));
+      dispatch(fetchPostSuccess(res[3].data, startTime, endTime, saveTime));
     } catch (err) {
       dispatch(fetchCommentFailure(err));
       dispatch(fetchPhotoFailure(err));
@@ -156,8 +204,14 @@ export const fetchAllComments = () => {
       console.log(res);
       console.timeEnd();
       let commentsEndTime = Date.now();
+      let saveTime = saveData(res, "comment");
       dispatch(
-        fetchCommentSuccess(res.data, commentsStartTime, commentsEndTime)
+        fetchCommentSuccess(
+          res.data,
+          commentsStartTime,
+          commentsEndTime,
+          saveTime
+        )
       );
     } catch (err) {
       dispatch(fetchCommentFailure(err));
@@ -177,7 +231,10 @@ export const fetchAllPhotos = () => {
       console.log(res);
       console.timeEnd();
       let photosEndTime = Date.now();
-      dispatch(fetchPhotoSuccess(res[1].data, photosStartTime, photosEndTime));
+      let saveTime = saveData(res, "photo");
+      dispatch(
+        fetchPhotoSuccess(res[1].data, photosStartTime, photosEndTime, saveTime)
+      );
     } catch (err) {
       dispatch(fetchPhotoFailure(err));
     }
@@ -195,7 +252,10 @@ export const fetchAllTodos = () => {
       console.log(res);
       console.timeEnd();
       let todosEndTime = Date.now();
-      dispatch(fetchTodoSuccess(res.data, todosStartTime, todosEndTime));
+      let saveTime = saveData(res, "todo");
+      dispatch(
+        fetchTodoSuccess(res.data, todosStartTime, todosEndTime, saveTime)
+      );
     } catch (err) {
       dispatch(fetchTodoFailure(err));
     }
@@ -213,7 +273,10 @@ export const fetchAllPosts = () => {
       console.log(res);
       console.timeEnd();
       let postsEndTime = Date.now();
-      dispatch(fetchPostSuccess(res.data, postsStartTime, postsEndTime));
+      let saveTime = saveData(res, "post");
+      dispatch(
+        fetchPostSuccess(res.data, postsStartTime, postsEndTime, saveTime)
+      );
     } catch (err) {
       dispatch(fetchPostFailure(err));
     }
