@@ -11,11 +11,6 @@ The four Urls should be pinged at the same time (5-sec delay after opening the A
 - [x] Start Save: When you start saving the Data
 - [x] End Save: When you end saving the data
 
-## Demo Link
-
-Open Here -
-[ **Demo** ]()
-
 ### Tech / Stack -
 
 - HTML5
