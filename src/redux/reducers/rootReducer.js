@@ -42,6 +42,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         comment: {
           data: action.payload.result,
+          startTime: action.payload.startTime,
           endTime: action.payload.endTime,
           saveStartTime: action.payload.saveStartTime,
           saveEndTime: action.payload.saveEndTime,
@@ -63,6 +64,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         photo: {
           data: action.payload.result,
+          startTime: action.payload.startTime,
           endTime: action.payload.endTime,
           saveStartTime: action.payload.saveStartTime,
           saveEndTime: action.payload.saveEndTime,
@@ -84,6 +86,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         todo: {
           data: action.payload.result,
+          startTime: action.payload.startTime,
           endTime: action.payload.endTime,
           saveStartTime: action.payload.saveStartTime,
           saveEndTime: action.payload.saveEndTime,
@@ -105,6 +108,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         post: {
           data: action.payload.result,
+          startTime: action.payload.startTime,
           endTime: action.payload.endTime,
           saveStartTime: action.payload.saveStartTime,
           saveEndTime: action.payload.saveEndTime,

@@ -15,7 +15,7 @@ import {
 import Axios from "axios";
 
 const config = {
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "https://jsonplaceholder.typicode.com",
   headers: {
     "Content-Type": "application/json",
   },
@@ -35,6 +35,7 @@ export const fetchCommentSuccess = (res, startTime, endTime, saveTime) => {
     type: COMMENTS_SUCCESS,
     payload: {
       result: res,
+      startTime: startTime,
       endTime: endTime,
       saveStartTime: saveTime[0],
       saveEndTime: saveTime[1],
@@ -225,10 +226,10 @@ export const fetchAllData = () => {
       console.timeEnd();
       let endTime = Date.now();
       let saveTime = saveData(res, "all");
-      dispatch(fetchCommentSuccess(res[0].data, endTime, saveTime));
-      dispatch(fetchPhotoSuccess(res[1].data, endTime, saveTime));
-      dispatch(fetchTodoSuccess(res[2].data, endTime, saveTime));
-      dispatch(fetchPostSuccess(res[3].data, endTime, saveTime));
+      dispatch(fetchCommentSuccess(res[0].data, startTime, endTime, saveTime));
+      dispatch(fetchPhotoSuccess(res[1].data, startTime, endTime, saveTime));
+      dispatch(fetchTodoSuccess(res[2].data, startTime, endTime, saveTime));
+      dispatch(fetchPostSuccess(res[3].data, startTime, endTime, saveTime));
     } catch (err) {
       dispatch(fetchCommentFailure(err));
       dispatch(fetchPhotoFailure(err));
@@ -243,7 +244,7 @@ export const fetchAllComments = () => {
   return async (dispatch) => {
     console.time();
     let commentsStartTime = Date.now();
-    dispatch(fetchCommentRequest());
+    dispatch(fetchCommentRequest(commentsStartTime));
     try {
       const res = await Axios.get("/comments", config);
       console.log(res);
@@ -269,7 +270,7 @@ export const fetchAllPhotos = () => {
   return async (dispatch) => {
     console.time();
     let photosStartTime = Date.now();
-    dispatch(fetchPhotoRequest());
+    dispatch(fetchPhotoRequest(photosStartTime));
 
     try {
       const res = await Axios.get("/photos", config);
@@ -291,7 +292,7 @@ export const fetchAllTodos = () => {
   return async (dispatch) => {
     console.time();
     let todosStartTime = Date.now();
-    dispatch(fetchTodoRequest());
+    dispatch(fetchTodoRequest(todosStartTime));
     try {
       const res = await Axios.get("/todos", config);
       console.log(res);
@@ -312,7 +313,7 @@ export const fetchAllPosts = () => {
   return async (dispatch) => {
     console.time();
     let postsStartTime = Date.now();
-    dispatch(fetchPostRequest());
+    dispatch(fetchPostRequest(postsStartTime));
     try {
       const res = await Axios.get("/posts", config);
       console.log(res);
