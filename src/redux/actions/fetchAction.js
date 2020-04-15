@@ -279,7 +279,7 @@ export const fetchAllPhotos = () => {
       let photosEndTime = Date.now();
       let saveTime = saveData(res, "photo");
       dispatch(
-        fetchPhotoSuccess(res[1].data, photosStartTime, photosEndTime, saveTime)
+        fetchPhotoSuccess(res.data, photosStartTime, photosEndTime, saveTime)
       );
     } catch (err) {
       dispatch(fetchPhotoFailure(err));
