@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchAllComments } from "./redux/actions/fetchAction";
+import {
+  fetchAllComments,
+  fetchAllPhotos,
+  fetchAllTodos,
+  fetchAllPosts,
+} from "./redux/actions/fetchAction";
 import { Container, Jumbotron, Row, Col, Table, Button } from "react-bootstrap";
 import Clock from "./Clock";
 
@@ -48,34 +53,12 @@ class App extends Component {
               <Table striped bordered hover>
                 <tbody>
                   <tr>
-                    <td>1</td>
-                    <td>Mark</td>
+                    <td>Start</td>
+                    <td>{this.props.commentsStartTime}</td>
                   </tr>
                   <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Col>
-            <Col md={6}>
-              <Table striped bordered hover>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
+                    <td>End</td>
+                    <td>{this.props.commentsEndTime}</td>
                   </tr>
                   <tr>
                     <td>1</td>
@@ -92,12 +75,12 @@ class App extends Component {
               <Table striped bordered hover>
                 <tbody>
                   <tr>
-                    <td>1</td>
-                    <td>Mark</td>
+                    <td>Start</td>
+                    <td>{this.props.photosStartTime}</td>
                   </tr>
                   <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
+                    <td>End</td>
+                    <td>{this.props.photosEndTime}</td>
                   </tr>
                   <tr>
                     <td>1</td>
@@ -114,12 +97,34 @@ class App extends Component {
               <Table striped bordered hover>
                 <tbody>
                   <tr>
+                    <td>Start</td>
+                    <td>{this.props.todosStartTime}</td>
+                  </tr>
+                  <tr>
+                    <td>End</td>
+                    <td>{this.props.todosEndTime}</td>
+                  </tr>
+                  <tr>
                     <td>1</td>
                     <td>Mark</td>
                   </tr>
                   <tr>
                     <td>2</td>
                     <td>Jacob</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
+            <Col md={6}>
+              <Table striped bordered hover>
+                <tbody>
+                  <tr>
+                    <td>Start</td>
+                    <td>{this.props.postsStartTime}</td>
+                  </tr>
+                  <tr>
+                    <td>End</td>
+                    <td>{this.props.postsEndTime}</td>
                   </tr>
                   <tr>
                     <td>1</td>
@@ -154,8 +159,9 @@ class App extends Component {
                 variant="outline-dark"
                 size="lg"
                 block
+                onClick={() => this.props.getPhotos()}
               >
-                Button 2
+                Get Photos
               </Button>
             </Col>
             <Col md={6}>
@@ -165,8 +171,9 @@ class App extends Component {
                 variant="outline-dark"
                 size="lg"
                 block
+                onClick={() => this.props.getTodos()}
               >
-                Button 3
+                Get Todos
               </Button>
             </Col>
             <Col md={6}>
@@ -176,8 +183,9 @@ class App extends Component {
                 variant="outline-dark"
                 size="lg"
                 block
+                onClick={() => this.props.getPosts()}
               >
-                Button 4
+                Get Posts
               </Button>
             </Col>
           </Row>
@@ -193,8 +201,21 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  commentsStartTime: state.commentsStartTime,
+  commentsEndTime: state.commentsEndTime,
+  photosStartTime: state.photosStartTime,
+  photosEndTime: state.photosEndTime,
+  todosStartTime: state.todosStartTime,
+  todosEndTime: state.todosEndTime,
+  postsStartTime: state.postsStartTime,
+  postsEndTime: state.postsEndTime,
+});
 const mapDispatchToProps = (dispatch) => ({
   getComments: () => dispatch(fetchAllComments()),
+  getPhotos: () => dispatch(fetchAllPhotos()),
+  getTodos: () => dispatch(fetchAllTodos()),
+  getPosts: () => dispatch(fetchAllPosts()),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
