@@ -4,7 +4,7 @@ const Clock = () => {
   const [time, setTime] = useState(Date.now());
 
   useEffect(() => {
-    setInterval(() => {
+    let time = setInterval(() => {
       setTime(Date.now());
     }, 1000);
     return () => {
