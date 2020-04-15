@@ -21,6 +21,11 @@ let initialState = {
   post: {},
 };
 
+/**
+ * root reducer
+ * @param {*} state
+ * @param {*} action {type, payload}
+ */
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     // comments
