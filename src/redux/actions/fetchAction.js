@@ -15,7 +15,7 @@ import {
 import Axios from "axios";
 
 const config = {
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: "https://reqres.in/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -217,10 +217,10 @@ export const fetchAllData = () => {
     dispatch(fetchPostRequest(startTime));
 
     try {
-      const comments = Axios.get("/comments", config);
-      const photos = Axios.get("/photos", config);
-      const todos = Axios.get("/todos", config);
-      const posts = Axios.get("/posts", config);
+      const comments = Axios.get("/users", config);
+      const photos = Axios.get("/users?page=1", config);
+      const todos = Axios.get("/users?page=2", config);
+      const posts = Axios.get("/users/2", config);
 
       const res = await Axios.all([comments, photos, todos, posts]);
       console.timeEnd();
