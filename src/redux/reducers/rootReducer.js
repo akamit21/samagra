@@ -15,18 +15,10 @@ import {
 
 let initialState = {
   error: false,
-  commentsStartTime: null,
-  commentsEndTime: null,
-  comments: [],
-  photosStartTime: null,
-  photosEndTime: null,
-  photos: [],
-  todosStartTime: null,
-  todosEndTime: null,
-  todos: [],
-  postsStartTime: null,
-  postsEndTime: null,
-  posts: [],
+  comment: {},
+  photo: {},
+  todo: {},
+  post: {},
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -40,9 +32,13 @@ export const rootReducer = (state = initialState, action) => {
     case COMMENTS_SUCCESS: {
       return {
         ...state,
-        comments: action.payload.result,
-        commentsStartTime: action.payload.startTime,
-        commentsEndTime: action.payload.endTime,
+        comment: {
+          data: action.payload.result,
+          startTime: action.payload.startTime,
+          endTime: action.payload.endTime,
+          saveStartTime: action.payload.saveStartTime,
+          saveEndTime: action.payload.saveEndTime,
+        },
       };
     }
 
@@ -55,9 +51,13 @@ export const rootReducer = (state = initialState, action) => {
     case PHOTOS_SUCCESS: {
       return {
         ...state,
-        photos: action.payload.result,
-        photosStartTime: action.payload.startTime,
-        photosEndTime: action.payload.endTime,
+        photo: {
+          data: action.payload.result,
+          startTime: action.payload.startTime,
+          endTime: action.payload.endTime,
+          saveStartTime: action.payload.saveStartTime,
+          saveEndTime: action.payload.saveEndTime,
+        },
       };
     }
 
@@ -70,9 +70,13 @@ export const rootReducer = (state = initialState, action) => {
     case TODOS_SUCCESS: {
       return {
         ...state,
-        todos: action.payload.result,
-        todosStartTime: action.payload.startTime,
-        todosEndTime: action.payload.endTime,
+        todo: {
+          data: action.payload.result,
+          startTime: action.payload.startTime,
+          endTime: action.payload.endTime,
+          saveStartTime: action.payload.saveStartTime,
+          saveEndTime: action.payload.saveEndTime,
+        },
       };
     }
 
@@ -85,9 +89,13 @@ export const rootReducer = (state = initialState, action) => {
     case POSTS_SUCCESS: {
       return {
         ...state,
-        posts: action.payload.result,
-        postsStartTime: action.payload.startTime,
-        postsEndTime: action.payload.endTime,
+        post: {
+          data: action.payload.result,
+          startTime: action.payload.startTime,
+          endTime: action.payload.endTime,
+          saveStartTime: action.payload.saveStartTime,
+          saveEndTime: action.payload.saveEndTime,
+        },
       };
     }
     default:
