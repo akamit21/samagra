@@ -125,17 +125,51 @@ const saveData = (res, type) => {
   switch (type) {
     // comments
     case "comment": {
-      return "a";
+      let saveStartTime = Date.now();
+      let localData = JSON.parse(localStorage.getItem("APIData"));
+      console.log(localData);
+      let data = {
+        comments: res.data,
+        photos: localData.photos,
+        todos: localData.todos,
+        posts: localData.posts,
+      };
+      localStorage.setItem("APIData", JSON.stringify(data));
+      let saveEndTime = Date.now();
+      return [saveStartTime, saveEndTime];
     }
     case "photo": {
-      return "a";
+      let saveStartTime = Date.now();
+      let localData = JSON.parse(localStorage.getItem("APIData"));
+      console.log(localData);
+      let data = {
+        comments: localData.comments,
+        photos: res.data,
+        todos: localData.todos,
+        posts: localData.posts,
+      };
+      localStorage.setItem("APIData", JSON.stringify(data));
+      let saveEndTime = Date.now();
+      return [saveStartTime, saveEndTime];
     }
     case "todo": {
-      return "a";
+      let saveStartTime = Date.now();
+      let localData = JSON.parse(localStorage.getItem("APIData"));
+      console.log(localData);
+      let data = {
+        comments: localData.comments,
+        photos: localData.photos,
+        todos: res.data,
+        posts: localData.posts,
+      };
+      localStorage.setItem("APIData", JSON.stringify(data));
+      let saveEndTime = Date.now();
+      return [saveStartTime, saveEndTime];
     }
     case "post": {
       let saveStartTime = Date.now();
       let localData = JSON.parse(localStorage.getItem("APIData"));
+      console.log(localData);
       let data = {
         comments: localData.comments,
         photos: localData.photos,
