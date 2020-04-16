@@ -32,9 +32,6 @@ export const rootReducer = (state = initialState, action) => {
     case COMMENTS_REQUEST: {
       return {
         ...state,
-        comment: {
-          startTime: action.payload.startTime,
-        },
       };
     }
     case COMMENTS_SUCCESS: {
@@ -53,9 +50,6 @@ export const rootReducer = (state = initialState, action) => {
     case PHOTOS_REQUEST: {
       return {
         ...state,
-        photo: {
-          startTime: action.payload.startTime,
-        },
       };
     }
     case PHOTOS_SUCCESS: {
@@ -74,9 +68,6 @@ export const rootReducer = (state = initialState, action) => {
     case TODOS_REQUEST: {
       return {
         ...state,
-        todo: {
-          startTime: action.payload.startTime,
-        },
       };
     }
     case TODOS_SUCCESS: {
@@ -95,9 +86,6 @@ export const rootReducer = (state = initialState, action) => {
     case POSTS_REQUEST: {
       return {
         ...state,
-        post: {
-          startTime: action.payload.startTime,
-        },
       };
     }
     case POSTS_SUCCESS: {
