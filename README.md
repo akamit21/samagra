@@ -11,6 +11,8 @@ The four Urls should be pinged at the same time (5-sec delay after opening the A
 - [x] Start Save: When you start saving the Data
 - [x] End Save: When you end saving the data
 
+[ **Demo** ](https://samagra.now.sh/)
+
 ### Tech / Stack -
 
 - HTML5
