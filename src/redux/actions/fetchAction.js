@@ -223,12 +223,7 @@ export const fetchAllComments = () => {
       let commentsEndTime = Date.now();
       let saveTime = saveData(res, "comment");
       dispatch(
-        fetchCommentSuccess(
-          res.data,
-          commentsStartTime,
-          commentsEndTime,
-          saveTime
-        )
+        fetchCommentSuccess(commentsStartTime, commentsEndTime, saveTime)
       );
     } catch (err) {
       dispatch(fetchCommentFailure(err));
@@ -249,9 +244,7 @@ export const fetchAllPhotos = () => {
       console.timeEnd();
       let photosEndTime = Date.now();
       let saveTime = saveData(res, "photo");
-      dispatch(
-        fetchPhotoSuccess(res.data, photosStartTime, photosEndTime, saveTime)
-      );
+      dispatch(fetchPhotoSuccess(photosStartTime, photosEndTime, saveTime));
     } catch (err) {
       dispatch(fetchPhotoFailure(err));
     }
@@ -270,9 +263,7 @@ export const fetchAllTodos = () => {
       console.timeEnd();
       let todosEndTime = Date.now();
       let saveTime = saveData(res, "todo");
-      dispatch(
-        fetchTodoSuccess(res.data, todosStartTime, todosEndTime, saveTime)
-      );
+      dispatch(fetchTodoSuccess(todosStartTime, todosEndTime, saveTime));
     } catch (err) {
       dispatch(fetchTodoFailure(err));
     }
@@ -291,9 +282,7 @@ export const fetchAllPosts = () => {
       console.timeEnd();
       let postsEndTime = Date.now();
       let saveTime = saveData(res, "post");
-      dispatch(
-        fetchPostSuccess(res.data, postsStartTime, postsEndTime, saveTime)
-      );
+      dispatch(fetchPostSuccess(postsStartTime, postsEndTime, saveTime));
     } catch (err) {
       dispatch(fetchPostFailure(err));
     }
